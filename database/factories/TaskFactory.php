@@ -19,7 +19,7 @@ class TaskFactory extends Factory
         return [
             'name' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'completed' => false,
+            'completed' => $this->faker->boolean,
         ];
     }
 }
