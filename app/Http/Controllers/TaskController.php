@@ -20,6 +20,7 @@ class TaskController extends Controller
     {
         return view('tasks.create', [
             'task' => new Task(),
+            'method' => 'POST',
             'actionUrl' => route(name: 'tasks.store'),
             'submitButtonText' => 'Crear tarea'
         ]);
@@ -28,6 +29,35 @@ class TaskController extends Controller
     public function store(TaskRequest $request): RedirectResponse
     {
         Task::created($request->validated());
+        return redirect()->route('tasks.index');
+    }
+
+    public function edit(Task $task): View
+    {
+        return view('tasks.edit', [
+            'task' => $task,
+            'method' => 'PUT',
+            'actionUrl' => route(name: 'tasks.update', parameters: $task),
+            'submitButtonText' => 'Actualizar tarea'
+        ]);
+    }
+
+    public function update(TaskRequest $request, Task $task): RedirectResponse
+    {
+        $task->update($request->validated());
+        return redirect()->route('tasks.index');
+    }
+    public function toggle(Task $task): RedirectResponse
+    {
+        $task->update([
+            'completed' => !$task->completed,
+
+        ]);
+        return redirect()->route('tasks.index');
+    }
+    public function destroy(Task $task): RedirectResponse
+    {
+        $task->delete();
         return redirect()->route('tasks.index');
     }
 }

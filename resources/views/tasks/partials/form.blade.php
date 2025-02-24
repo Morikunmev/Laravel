@@ -1,5 +1,7 @@
 <form action="{{$actionUrl}}" method="POST" class="max-w-sm mx-auto bg-white p-8 rounded-lg shadow-md">
     @csrf
+
+    @method($method)
     <h2 class="text-2xl font-semibold mb-6 text-center">Login Form</h2>
     <div class="mb-6">
         <label for="name" class="block mb-2 text-sm font-medium text-gray-700">Nombre</label>

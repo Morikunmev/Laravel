@@ -49,21 +49,25 @@
                                     {{ $task->created_at->format('d/m/Y') }}
                                 </td>
                                 <td class="px-6 py-3">
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">
+                                    <a href="{{route('tasks.edit', $task)}}" class="text-indigo-600 hover:text-indigo-900">
                                         Editar
                                     </a>
-                                    @if ($task->completed)
-                                        <a href="#', $task) }}" class="text-red-600 hover:text-red-900">
-                                            Deshacer
-                                        </a>
-                                    @else
-                                        <a href="#', $task) }}" class="text-green-600 hover:text-green-900">
-                                            Completar
-                                        </a>
-                                    @endif
-                                    <a href="#" class="text-red-600 hover:text-red-900">
-                                        Eliminar
-                                    </a>
+                                    <form action="{{route('tasks.toggle', $task)}}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit"
+                                            class="{{$task->completed ? 'text-red-600 dark:text-red-500' : 'text-green-600 dark:text-green-500'}} hover:text-green-900">
+                                            {{$task->completed ? 'Deshacer' : 'Completar'}}
+                                        </button>
+                                    </form>
+                                    <form action="{{route('tasks.destroy', $task)}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-900">
+                                            Eliminar
+                                        </button>
+
+                                    </form>
                             </tr>
                         @endforeach
 
